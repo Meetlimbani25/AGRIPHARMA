@@ -1,0 +1,39 @@
+.orders-page { padding: 48px 0 80px; }
+.orders-layout { display: grid; grid-template-columns: 1fr 420px; gap: 32px; align-items: start; }
+
+.orders-list { display: flex; flex-direction: column; gap: 12px; }
+.order-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 20px 24px; border: 1.5px solid var(--border);
+  cursor: pointer; transition: var(--transition);
+}
+.order-card:hover { border-color: var(--green-light); box-shadow: var(--shadow-sm); }
+.order-card.selected { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,107,46,0.12); }
+.order-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.order-id { font-family: 'Space Mono', monospace; font-size: 0.9rem; font-weight: 700; color: var(--green-deep); }
+.order-total { font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+.order-card-bottom { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-light); }
+
+.order-detail-panel {
+  background: white; border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); overflow: hidden;
+  position: sticky; top: 88px;
+}
+.order-detail { padding: 28px; }
+.order-detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.order-detail-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--green-deep); }
+.order-detail-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; background: var(--off-white); border-radius: var(--radius-md); padding: 20px; margin-bottom: 4px; }
+.order-detail-meta div { display: flex; flex-direction: column; gap: 4px; }
+.order-detail-meta span { font-size: 0.78rem; color: var(--text-light); }
+.order-detail-meta strong { font-size: 0.9rem; color: var(--text-dark); }
+.order-item {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.order-item:last-child { border-bottom: none; }
+.order-item strong { font-size: 0.9rem; color: var(--text-dark); }
+
+@media (max-width: 900px) {
+  .orders-layout { grid-template-columns: 1fr; }
+  .order-detail-panel { position: static; }
+}

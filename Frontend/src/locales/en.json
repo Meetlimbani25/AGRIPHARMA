@@ -1,0 +1,102 @@
+{
+  "common": {
+    "login": "Login",
+    "register": "Sign Up",
+    "logout": "Logout",
+    "dashboard": "Dashboard",
+    "crops": "Crops",
+    "shop": "Shop",
+    "diseaseAI": "Disease AI",
+    "cart": "Cart",
+    "orders": "Orders",
+    "myShop": "My Shop",
+    "adminPanel": "Admin Panel",
+    "profile": "Profile",
+    "registerFarmer": "Register as Farmer",
+    "registerShopkeeper": "Register as Shopkeeper",
+    "platform": "Platform",
+    "account": "Account",
+    "support": "Support",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
+  },
+  "home": {
+    "title": "AgriPharma",
+    "heroBadge": "🌱 Smart Farming Platform",
+    "heroTitle1": "Grow Smarter,",
+    "heroTitle2": "Farm Better",
+    "heroDesc": "AgriPharma connects farmers with AI-powered tools, quality agri-inputs, and expert crop knowledge — all in one platform built for Indian agriculture.",
+    "startForFree": "Start for Free →",
+    "exploreCrops": "Explore Crops",
+    "goToDashboard": "Go to Dashboard →",
+    "stats": {
+      "crops": "Crops",
+      "disease": "Disease Detection",
+      "sellers": "Verified Sellers"
+    },
+    "popularCrops": "Popular Crops on AgriPharma",
+    "featuresTitle": "Everything a Farmer Needs",
+    "featuresSubtitle": "One platform, complete agricultural support from sowing to selling."
+  },
+  "crops": {
+    "hubTitle": "Gujarat Crop Knowledge Hub",
+    "hubSubtitle": "Complete crop scheduling for all seasons grown in Gujarat — Monsoon, Winter & Summer",
+    "searchPlaceholder": "🔍 Search crops by name...",
+    "noCropsFound": "No crops found",
+    "tryChangingFilter": "Try changing the season filter or search term.",
+    "viewFullSchedule": "View Full Schedule →",
+    "days": "days",
+    "weeks": "weeks",
+    "stats": {
+      "monsoon": "Monsoon",
+      "winter": "Winter",
+      "summer": "Summer",
+      "monsoonMonths": "June – October",
+      "winterMonths": "October – March",
+      "summerMonths": "March – June"
+    },
+    "labels": {
+      "allSeasons": "All Seasons",
+      "monsoon": "🌧️ Monsoon",
+      "winter": "❄️ Winter",
+      "summer": "☀️ Summer"
+    }
+  },
+  "cropDetail": {
+    "backToCrops": "← Back to Crops",
+    "weeklyCareSchedule": "Weekly Care Schedule",
+    "availableSeeds": "Available Seeds",
+    "week": "Week",
+    "critical": "CRITICAL",
+    "fertilizer": "🧪 Fertilizer",
+    "irrigation": "💧 Irrigation",
+    "medicine": "🛡️ Medicine/Pesticide",
+    "watchForDiseases": "🦠 Watch for Diseases",
+    "tipsAndActivities": "📋 Tips & Activities",
+    "soil": "🪱 Soil",
+    "temp": "🌡️ Temp",
+    "water": "💧 Water",
+    "spacing": "📏 Spacing"
+  },
+  "cropsList": {
+    "wheat": "ઘઉં (Wheat)",
+    "rice": "ચોખા (Rice)",
+    "cotton": "કપાસ (Cotton)",
+    "maize": "મકાઈ (Maize)",
+    "groundnut": "મગફળી (Groundnut)",
+    "bajra": "બાજરી (Bajra)",
+    "jowar": "જુવાર (Jowar)",
+    "castor": "દિવેલા (Castor)",
+    "onion": "ડુંગળી (Onion)",
+    "potato": "બટાકા (Potato)",
+    "tomato": "ટમેટા (Tomato)",
+    "garlic": "લસણ (Garlic)",
+    "cumin": "જીરું (Cumin)",
+    "fennel": "વરિયાળી (Fennel)",
+    "mustard": "રાઈ (Mustard)",
+    "banana": "કેળા (Banana)",
+    "turmeric": "હળદર (Turmeric)",
+    "ginger": "આદું (Ginger)"
+  }
+}

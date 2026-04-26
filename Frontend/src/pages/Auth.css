@@ -1,0 +1,173 @@
+/* ── AUTH PAGE WRAPPER ── */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── ANIMATED BACKGROUND ── */
+.auth-bg {
+  position: fixed; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+.auth-sky {
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 65%;
+  background: linear-gradient(180deg, #87ceeb 0%, #b8e4f7 50%, #d4f0c0 100%);
+}
+.auth-sun {
+  position: absolute; top: 40px; right: 80px;
+  width: 70px; height: 70px; border-radius: 50%;
+  background: radial-gradient(circle, #ffe66d, #ffd700);
+  box-shadow: 0 0 40px #ffd70060;
+  animation: sunPulse 3s ease-in-out infinite;
+}
+.cloud {
+  position: absolute;
+  background: white; border-radius: 50px;
+  opacity: 0.85;
+}
+.cloud::before, .cloud::after {
+  content: ''; position: absolute; background: white; border-radius: 50%;
+}
+.c1 { width: 100px; height: 35px; top: 60px; left: 8%; animation: cloudDrift 18s linear infinite; }
+.c1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+.c1::after  { width: 35px; height: 35px; top: -15px; left: 50px; }
+.c2 { width: 140px; height: 45px; top: 100px; left: 35%; animation: cloudDrift 24s linear infinite 4s; }
+.c2::before { width: 70px; height: 60px; top: -30px; left: 20px; }
+.c2::after  { width: 50px; height: 45px; top: -20px; left: 70px; }
+.c3 { width: 90px; height: 30px; top: 50px; right: 20%; animation: cloudDrift 20s linear infinite 8s; }
+.c3::before { width: 45px; height: 45px; top: -22px; left: 12px; }
+.c3::after  { width: 30px; height: 30px; top: -14px; left: 48px; }
+
+@keyframes cloudDrift {
+  from { transform: translateX(-200px); }
+  to   { transform: translateX(110vw); }
+}
+
+.auth-field {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 38%;
+  background: linear-gradient(180deg, #5a9e3a 0%, #3d7a28 60%, #2d5c1e 100%);
+}
+.auth-field::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 20px;
+  background: radial-gradient(ellipse at center, #6bbf3f 0%, transparent 70%);
+}
+
+.auth-tractor {
+  position: absolute; bottom: 70px; left: 0;
+  font-size: 2.8rem; z-index: 1;
+  animation: tractorDrive 16s linear infinite;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+}
+@keyframes tractorDrive {
+  from { transform: translateX(-100px) scaleX(-1); }
+  to   { transform: translateX(110vw) scaleX(-1); }
+}
+
+.auth-crops {
+  position: absolute; bottom: 60px; left: 0; right: 0;
+  display: flex; justify-content: space-around;
+  padding: 0 40px;
+}
+.auth-crop {
+  font-size: 1.8rem;
+  animation: cropSway 2s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+.auth-crop:nth-child(odd)  { animation-delay: 0.3s; }
+.auth-crop:nth-child(even) { animation-delay: 0.8s; }
+@keyframes cropSway {
+  0%,100% { transform: rotate(-3deg); }
+  50%     { transform: rotate(3deg); }
+}
+
+/* ── AUTH CARD ── */
+.auth-container {
+  position: relative; z-index: 10;
+  width: 100%; max-width: 460px;
+  padding: 24px;
+}
+.auth-card {
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: 0 24px 80px rgba(30,63,30,0.25), 0 0 0 1px rgba(255,255,255,0.6);
+}
+.auth-logo {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 24px; font-size: 1.5rem;
+}
+.auth-logo-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 700; color: var(--green-deep);
+}
+.auth-logo-text span { color: var(--green-bright); }
+.auth-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem; color: var(--green-deep); margin-bottom: 6px;
+}
+.auth-subtitle { color: var(--text-light); font-size: 0.9rem; margin-bottom: 24px; }
+
+/* ── TABS ── */
+.auth-tabs {
+  display: flex; background: var(--off-white);
+  border-radius: var(--radius-md); padding: 4px;
+  margin-bottom: 24px; gap: 4px;
+}
+.auth-tabs button {
+  flex: 1; padding: 10px; border: none; cursor: pointer;
+  border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 500; color: var(--text-light);
+  background: transparent; transition: var(--transition);
+}
+.auth-tabs button.active {
+  background: white; color: var(--green-deep);
+  box-shadow: var(--shadow-sm); font-weight: 600;
+}
+
+/* ── FORM FOOTER ── */
+.auth-footer-links {
+  margin-top: 24px; text-align: center;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.auth-footer-links p { font-size: 0.9rem; color: var(--text-light); }
+.auth-footer-links a { color: var(--green-mid); text-decoration: none; font-weight: 500; font-size: 0.9rem; }
+.auth-footer-links a:hover { text-decoration: underline; }
+
+/* ── SIGNUP COLUMNS ── */
+.auth-card-wide { max-width: 680px; }
+.form-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; }
+.form-full { grid-column: 1 / -1; }
+
+/* ── RADIO / CHECKBOX GROUPS ── */
+.radio-group, .checkbox-group {
+  display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px;
+}
+.radio-option, .checkbox-option {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); cursor: pointer;
+  transition: var(--transition); font-size: 0.9rem;
+}
+.radio-option:has(input:checked),
+.checkbox-option:has(input:checked) {
+  border-color: var(--green-mid); background: var(--green-pale); color: var(--green-deep);
+}
+.radio-option input, .checkbox-option input { accent-color: var(--green-mid); }
+
+@media (max-width: 600px) {
+  .auth-card { padding: 28px 24px; }
+  .form-cols { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .auth-card { padding: 24px 16px; }
+  .auth-tabs { flex-direction: column; }
+}

@@ -1,0 +1,102 @@
+{
+  "common": {
+    "login": "લોગિન",
+    "register": "સાઇન અપ",
+    "logout": "લોગ આઉટ",
+    "dashboard": "ડેશબોર્ડ",
+    "crops": "પાક માર્ગદર્શિકા",
+    "shop": "ખેતીની દુકાન",
+    "diseaseAI": "રોગની તપાસ",
+    "cart": "કાર્ટ",
+    "orders": "ઓર્ડર",
+    "myShop": "મારી દુકાન",
+    "adminPanel": "એડમિન પેનલ",
+    "profile": "પ્રોફાઇલ",
+    "registerFarmer": "ખેડૂત તરીકે નોંધણી કરો",
+    "registerShopkeeper": "દુકાનદાર તરીકે નોંધણી કરો",
+    "platform": "પ્લેટફોર્મ",
+    "account": "એકાઉન્ટ",
+    "support": "સપોર્ટ",
+    "contactUs": "અમારો સંપર્ક કરો",
+    "privacyPolicy": "ગોપનીયતા નીતિ",
+    "termsOfService": "સેવાની શરતો"
+  },
+  "home": {
+    "title": "એગ્રીફાર્મા",
+    "heroBadge": "🌱 સ્માર્ટ ફાર્મિંગ પ્લેટફોર્મ",
+    "heroTitle1": "વધુ સ્માર્ટ બનો,",
+    "heroTitle2": "ખેતી વધુ સારી કરો",
+    "heroDesc": "એગ્રીફાર્મા ખેડૂતોને AI-સંચાલિત સાધનો, ગુણવત્તાયુક્ત કૃષિ-ઈનપુટ્સ અને નિષ્ણાત પાકની માહિતી સાથે જોડે છે — બધું ભારતીય કૃષિ માટે બનાવેલ એક પ્લેટફોર્મ પર.",
+    "startForFree": "મફતમાં શરૂ કરો →",
+    "exploreCrops": "પાક શોધો",
+    "goToDashboard": "ડેશબોર્ડ પર જાઓ →",
+    "stats": {
+      "crops": "પાક",
+      "disease": "રોગની તપાસ",
+      "sellers": "ચકાસાયેલ વિક્રેતા"
+    },
+    "popularCrops": "એગ્રીફાર્મા પર લોકપ્રિય પાક",
+    "featuresTitle": "ખેડૂતને જોઈતી દરેક વસ્તુ",
+    "featuresSubtitle": "એક પ્લેટફોર્મ, વાવણીથી વેચાણ સુધી સંપૂર્ણ કૃષિ સહાય."
+  },
+  "crops": {
+    "hubTitle": "ગુજરાત પાક જ્ઞાન કેન્દ્ર",
+    "hubSubtitle": "ગુજરાતમાં ઉગાડવામાં આવતી તમામ સીઝન માટે સંપૂર્ણ પાક શેડ્યુલિંગ — ચોમાસું, શિયાળો અને ઉનાળો",
+    "searchPlaceholder": "🔍 નામ દ્વારા પાક શોધો...",
+    "noCropsFound": "કોઈ પાક મળ્યા નથી",
+    "tryChangingFilter": "સીઝન ફિલ્ટર અથવા સર્ચ શબ્દ બદલીને પ્રયાસ કરો.",
+    "viewFullSchedule": "સંપૂર્ણ શેડ્યૂલ જુઓ →",
+    "days": "દિવસો",
+    "weeks": "અઠવાડિયા",
+    "stats": {
+      "monsoon": "ચોમાસું",
+      "winter": "શિયાળો",
+      "summer": "ઉનાળો",
+      "monsoonMonths": "જૂન - ઓક્ટોબર",
+      "winterMonths": "ઓક્ટોબર - માર્ચ",
+      "summerMonths": "માર્ચ - જૂન"
+    },
+    "labels": {
+      "allSeasons": "બધી સીઝન",
+      "monsoon": "🌧️ ચોમાસું",
+      "winter": "❄️ શિયાળો",
+      "summer": "☀️ ઉનાળો"
+    }
+  },
+  "cropDetail": {
+    "backToCrops": "← પાક પર પાછા જાઓ",
+    "weeklyCareSchedule": "સાપ્તાહિક સંભાળ શેડ્યૂલ",
+    "availableSeeds": "ઉપલબ્ધ બીજ",
+    "week": "અઠવાડિયું",
+    "critical": "જટિલ (Critical)",
+    "fertilizer": "🧪 ખાતર",
+    "irrigation": "💧 પિયત (Irrigation)",
+    "medicine": "🛡️ દવા/જંતુનાશક",
+    "watchForDiseases": "🦠 રોગોથી સાવધ રહો",
+    "tipsAndActivities": "📋 ટિપ્સ અને પ્રવૃત્તિઓ",
+    "soil": "🪱 જમીન",
+    "temp": "🌡️ તાપમાન",
+    "water": "💧 પાણી",
+    "spacing": "📏 અંતર (Spacing)"
+  },
+  "cropsList": {
+    "wheat": "ઘઉં (Wheat)",
+    "rice": "ચોખા (Rice)",
+    "cotton": "કપાસ (Cotton)",
+    "maize": "મકાઈ (Maize)",
+    "groundnut": "મગફળી (Groundnut)",
+    "bajra": "બાજરી (Bajra)",
+    "jowar": "જુવાર (Jowar)",
+    "castor": "દિવેલા (Castor)",
+    "onion": "ડુંગળી (Onion)",
+    "potato": "બટાકા (Potato)",
+    "tomato": "ટમેટા (Tomato)",
+    "garlic": "લસણ (Garlic)",
+    "cumin": "જીરું (Cumin)",
+    "fennel": "વરિયાળી (Fennel)",
+    "mustard": "રાઈ (Mustard)",
+    "banana": "કેળા (Banana)",
+    "turmeric": "હળદર (Turmeric)",
+    "ginger": "આદું (Ginger)"
+  }
+}

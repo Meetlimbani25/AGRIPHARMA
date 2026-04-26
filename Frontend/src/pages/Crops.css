@@ -1,0 +1,143 @@
+/* =============================================
+   CROP PAGE — Enhanced for Gujarat All Seasons
+   ============================================= */
+.crops-page { padding: 48px 0 80px; }
+
+.page-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+}
+
+/* Season Stats Row */
+.season-stats-row {
+  display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;
+}
+.season-stat {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 22px; border-radius: 12px;
+  flex: 1; min-width: 200px;
+  font-family: 'DM Sans', sans-serif;
+}
+.season-stat.monsoon { background: linear-gradient(135deg,#e3f2fd,#bbdefb); border: 1.5px solid #90caf9; }
+.season-stat.winter  { background: linear-gradient(135deg,#e8f5e9,#c8e6c9); border: 1.5px solid #a5d6a7; }
+.season-stat.summer  { background: linear-gradient(135deg,#fff8e1,#ffecb3); border: 1.5px solid #ffe082; }
+.ss-icon { font-size: 1.8rem; }
+.ss-label { font-weight: 700; font-size: 0.95rem; color: var(--green-deep); }
+.ss-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+
+/* Crop counter badge */
+.crop-count-badge {
+  background: var(--green-deep); color: white;
+  padding: 10px 22px; border-radius: 20px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+  align-self: flex-start;
+}
+.crop-count-badge span { font-size: 1.4rem; font-weight: 800; margin-right: 4px; }
+
+/* Filters */
+.crops-filters {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 36px; flex-wrap: wrap;
+}
+.season-tabs {
+  display: flex; background: white; border-radius: var(--radius-md);
+  padding: 4px; border: 1.5px solid var(--border); gap: 4px; flex-wrap: wrap;
+}
+.season-tabs button {
+  padding: 9px 16px; border: none; cursor: pointer;
+  border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 500; color: var(--text-light);
+  background: transparent; transition: var(--transition); white-space: nowrap;
+}
+.season-tabs button.active { background: var(--green-mid); color: white; }
+.season-tabs button:hover:not(.active) { background: var(--green-pale); }
+
+.search-input {
+  flex: 1; min-width: 220px; padding: 11px 18px;
+  border: 1.5px solid var(--border); border-radius: var(--radius-md);
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+  outline: none; background: white; transition: var(--transition);
+}
+.search-input:focus { border-color: var(--green-mid); box-shadow: 0 0 0 3px rgba(46,107,46,0.1); }
+
+/* Season group headings (All view) */
+.season-group { margin-bottom: 48px; }
+.season-group-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px; padding-left: 14px;
+  border-left: 4px solid var(--green-mid);
+}
+.season-group-header h2 {
+  font-family: 'Playfair Display', serif; font-size: 1.35rem;
+  margin: 0;
+}
+.sg-count {
+  color: white; font-size: 0.78rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 12px;
+}
+
+/* Crop Grid */
+.crops-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px;
+}
+.crop-card {
+  background: white; border-radius: var(--radius-lg); overflow: hidden;
+  border: 1.5px solid var(--border); text-decoration: none; color: inherit;
+  transition: var(--transition); display: flex; flex-direction: column;
+}
+.crop-card:hover { border-color: var(--green-light); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.crop-card-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  background: #e8f5e8;
+}
+.crop-card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.crop-card:hover .crop-card-photo {
+  transform: scale(1.05);
+}
+.crop-card-emoji-overlay {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.crop-card-body { padding: 18px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.crop-card-body h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--green-deep); margin: 0; }
+.crop-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.badge-season {
+  font-size: 0.74rem; font-weight: 700;
+  padding: 3px 9px; border-radius: 10px; letter-spacing: 0.3px;
+}
+.crop-duration { font-size: 0.78rem; color: var(--text-light); }
+.crop-desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; flex: 1; margin: 0; }
+.crop-soil { font-size: 0.78rem; color: var(--text-light); }
+.crop-water { font-size: 0.78rem; color: #1565c0; }
+.crop-card-footer { margin-top: auto; padding-top: 6px; }
+.view-detail { color: var(--green-mid); font-size: 0.85rem; font-weight: 600; }
+
+/* Empty */
+.empty-state { text-align: center; padding: 80px 20px; }
+.empty-emoji { font-size: 4rem; margin-bottom: 16px; }
+.empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--green-deep); margin-bottom: 8px; }
+.empty-state p { color: var(--text-light); }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .season-stats-row { flex-direction: column; }
+  .season-tabs button { padding: 7px 11px; font-size: 0.78rem; }
+}

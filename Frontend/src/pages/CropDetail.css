@@ -1,0 +1,78 @@
+.crop-detail { padding: 36px 0 80px; }
+.back-link { color: var(--green-mid); text-decoration: none; font-size: 0.9rem; font-weight: 500; display: inline-block; margin-bottom: 28px; }
+.back-link:hover { text-decoration: underline; }
+
+.crop-detail-hero {
+  display: flex; gap: 48px; align-items: flex-start;
+  background: white; border-radius: var(--radius-xl);
+  padding: 40px; margin-bottom: 48px;
+  border: 1.5px solid var(--border); box-shadow: var(--shadow-sm);
+}
+.crop-hero-image-wrapper {
+  width: 280px;
+  height: 200px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-md);
+}
+.crop-hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.crop-hero-info { flex: 1; }
+.crop-tags { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
+.crop-full-desc { color: var(--text-mid); font-size: 0.95rem; line-height: 1.7; margin: 16px 0; max-width: 560px; }
+.crop-detail-stats { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; }
+.cds { display: flex; flex-direction: column; gap: 2px; }
+.cds span { font-size: 0.78rem; color: var(--text-light); }
+.cds strong { font-size: 0.9rem; color: var(--text-dark); }
+
+/* Schedule */
+.schedule-section { margin-bottom: 48px; }
+.week-selector { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.week-selector button {
+  padding: 8px 16px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); background: white;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+  cursor: pointer; transition: var(--transition);
+}
+.week-selector button.active { background: var(--green-mid); color: white; border-color: var(--green-mid); }
+.week-selector button:hover:not(.active) { border-color: var(--green-mid); }
+.week-card {
+  background: white; border-radius: var(--radius-lg);
+  padding: 32px; border: 1.5px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.week-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--green-deep); margin-bottom: 24px; }
+.week-critical { border-color: #ef9a9a !important; background: #fff8f8 !important; }
+.week-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.week-item { background: var(--off-white); border-radius: var(--radius-sm); padding: 16px; }
+.week-item.week-item-full { grid-column: 1 / -1; }
+.week-item span { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-light); margin-bottom: 6px; }
+.week-item p { font-size: 0.9rem; color: var(--text-dark); line-height: 1.6; }
+
+/* Seeds */
+.seeds-section { margin-bottom: 48px; }
+.seeds-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.seed-card {
+  background: white; border-radius: var(--radius-lg); padding: 24px;
+  border: 1.5px solid var(--border); transition: var(--transition);
+}
+.seed-card:hover { border-color: var(--green-light); box-shadow: var(--shadow-sm); }
+.seed-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; gap: 8px; }
+.seed-header h4 { font-size: 1rem; color: var(--green-deep); font-weight: 600; }
+.seed-company { font-size: 0.78rem; color: var(--text-light); background: var(--off-white); padding: 3px 8px; border-radius: 12px; white-space: nowrap; }
+.seed-info { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.seed-info span { font-size: 0.82rem; color: var(--text-mid); }
+.seed-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.5; margin-bottom: 16px; }
+.seed-purchase { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.seed-price { font-family: 'Space Mono', monospace; font-size: 1rem; color: var(--green-deep); font-weight: 700; }
+.seed-price small { font-family: 'DM Sans', sans-serif; font-size: 0.8rem; color: var(--text-light); font-weight: 400; }
+
+@media (max-width: 768px) {
+  .crop-detail-hero { flex-direction: column; }
+  .crop-hero-image-wrapper { width: 100%; height: 200px; }
+  .week-grid { grid-template-columns: 1fr; }
+}
