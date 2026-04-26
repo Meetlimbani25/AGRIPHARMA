@@ -32,3 +32,5 @@ __pycache__/
 .env
 Frontend/.env
 backend/.env
+backend/.env copy.example
+Frontend/.env copy.example
