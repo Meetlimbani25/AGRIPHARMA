@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import './Navbar.css';
+import { BACKEND_URL } from '../services/api';
 
 export default function Navbar() {
   const { user, role, logout } = useAuth();
@@ -55,7 +56,7 @@ export default function Navbar() {
                 <div className="navbar-user">
                   <Link to="/profile" className="user-avatar" onClick={() => setMenuOpen(false)}>
                     {user.profile_picture ? (
-                      <img src={`http://localhost:5001${user.profile_picture}`} alt="Profile" />
+                      <img src={`${BACKEND_URL}${user.profile_picture.startsWith('/') ? '' : '/'}${user.profile_picture}`} alt="Profile" />
                     ) : (
                       user.name?.charAt(0).toUpperCase()
                     )}

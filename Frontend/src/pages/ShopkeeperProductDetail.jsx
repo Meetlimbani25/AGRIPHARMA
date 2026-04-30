@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getShopkeeperProductById, getShopkeeperProductReviews, addShopkeeperProductReview, addToShopCart } from '../services/api';
+import { getShopkeeperProductById, getShopkeeperProductReviews, addShopkeeperProductReview, addToShopCart, BACKEND_URL } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import './ProductDetail.css';
 
@@ -71,7 +71,7 @@ export default function ShopkeeperProductDetail() {
         <div className="product-detail-hero">
           <div className="product-image">
             {product.image_url
-              ? <img src={`http://localhost:5001${product.image_url.startsWith('/') ? '' : '/'}${product.image_url.replace(/\\/g, '/')}`} alt={product.name} />
+              ? <img src={`${BACKEND_URL}${product.image_url.startsWith('/') ? '' : '/'}${product.image_url.replace(/\\/g, '/')}`} alt={product.name} />
               : <div className="placeholder-image">{product.category?.toLowerCase() === 'seed' ? '🌱' : product.category?.toLowerCase() === 'fertilizer' ? '🧪' : product.category?.toLowerCase() === 'pesticide' ? '💊' : '🏪'}</div>
             }
           </div>

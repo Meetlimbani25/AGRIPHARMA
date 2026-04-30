@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getMyShopkeeperProducts, addShopkeeperProduct, updateShopkeeperProduct, deleteShopkeeperProduct, getShopkeeperIncomingOrders, updateShopkeeperOrderStatus } from '../services/api';
+import { getMyShopkeeperProducts, addShopkeeperProduct, updateShopkeeperProduct, deleteShopkeeperProduct, getShopkeeperIncomingOrders, updateShopkeeperOrderStatus, BACKEND_URL } from '../services/api';
 import { generateInvoice } from '../utils/generateInvoice';
 import './Shopkeeper.css';
 
@@ -250,7 +250,7 @@ export default function Shopkeeper() {
             <div style={{ position: 'relative', width: '80px', height: '80px', margin: '0 auto 15px' }}>
               <div className="shop-icon" style={{ position: 'relative', width: '100%', height: '100%', margin: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#e9ecef', borderRadius: '50%', fontSize: '40px', overflow: 'hidden' }}>
                 {user?.profile_picture ? (
-                  <img src={`http://localhost:5001${user.profile_picture}`} alt="Profile" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={`${BACKEND_URL}${user.profile_picture.startsWith('/') ? '' : '/'}${user.profile_picture}`} alt="Profile" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
                   '🏪'
                 )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { getMyOrders, getDiseaseHistory, getCart } from '../services/api';
+import { getMyOrders, getDiseaseHistory, getCart, BACKEND_URL } from '../services/api';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -103,7 +103,7 @@ export default function Dashboard() {
                   {scans.slice(0,3).map(s => (
                     <div key={s.id} className="scan-card">
                       {s.image_url && (
-                        <img src={`http://localhost:5001${s.image_url}`} alt="scan" className="scan-thumb" />
+                        <img src={`${BACKEND_URL}${s.image_url.startsWith('/') ? '' : '/'}${s.image_url}`} alt="scan" className="scan-thumb" />
                       )}
                       <div className="scan-info">
                         <strong>{s.disease_name || 'Unknown'}</strong>

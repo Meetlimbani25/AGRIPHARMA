@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
-import { getCart, updateCartItem, removeFromCart, removeFromShopCart, placeOrder, placeShopkeeperOrder, createPayment, createShopkeeperPayment } from '../services/api';
+import { getCart, updateCartItem, removeFromCart, removeFromShopCart, placeOrder, placeShopkeeperOrder, createPayment, createShopkeeperPayment, BACKEND_URL } from '../services/api';
 import './Cart.css';
 
 export default function Cart() {
@@ -165,7 +165,7 @@ export default function Cart() {
                     <div key={item.id} className="cart-item">
                       <div className="cart-item-img">
                         {item.product_image
-                          ? <img src={`http://localhost:5001${item.product_image}`} alt="" />
+                          ? <img src={`${BACKEND_URL}${item.product_image.startsWith('/') ? '' : '/'}${item.product_image}`} alt="" />
                           : <span>{item.item_type === 'seed' ? '🌱' : '📦'}</span>
                         }
                       </div>
@@ -194,7 +194,7 @@ export default function Cart() {
                     <div key={item.id} className="cart-item">
                       <div className="cart-item-img">
                         {item.image_url
-                          ? <img src={`http://localhost:5001${item.image_url}`} alt="" />
+                          ? <img src={`${BACKEND_URL}${item.image_url.startsWith('/') ? '' : '/'}${item.image_url}`} alt="" />
                           : <span>📦</span>
                         }
                       </div>

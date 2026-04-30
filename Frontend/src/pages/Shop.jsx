@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getShopkeeperProducts } from '../services/api';
+import { getShopkeeperProducts, BACKEND_URL } from '../services/api';
 import { addToShopCart } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
@@ -99,7 +99,7 @@ export default function Shop() {
                       <div className="shop-card">
                         <div className="shop-card-img">
                           {p.image_url
-                            ? <img src={`http://localhost:5001${p.image_url.startsWith('/') ? '' : '/'}${p.image_url.replace(/\\/g, '/')}`} alt={p.name} />
+                            ? <img src={`${BACKEND_URL}${p.image_url.startsWith('/') ? '' : '/'}${p.image_url.replace(/\\/g, '/')}`} alt={p.name} />
                             : <img src={p.category?.toLowerCase() === 'seed' ? '/images/placeholder-seed.png' : p.category?.toLowerCase() === 'fertilizer' ? '/images/placeholder-fertilizer.png' : '/images/placeholder-pesticide.png'} alt={p.name} />
                           }
                         </div>

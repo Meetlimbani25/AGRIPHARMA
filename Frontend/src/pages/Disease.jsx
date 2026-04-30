@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { detectDisease, getDiseaseHistory } from '../services/api';
+import { detectDisease, getDiseaseHistory, BACKEND_URL } from '../services/api';
 import './Disease.css';
 
 export default function Disease() {
@@ -167,7 +167,7 @@ export default function Disease() {
                 {history.map(h => (
                   <div key={h.id} className="history-item">
                     {h.image_url && (
-                      <img src={`http://localhost:5001${h.image_url}`} alt="scan" className="history-thumb" />
+                      <img src={`${BACKEND_URL}${h.image_url.startsWith('/') ? '' : '/'}${h.image_url}`} alt="scan" className="history-thumb" />
                     )}
                     <div className="history-info">
                       <strong>{h.disease_name || 'Unknown'}</strong>
