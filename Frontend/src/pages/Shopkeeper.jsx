@@ -127,6 +127,16 @@ export default function Shopkeeper() {
       setError('Please provide product name, price, and category.');
       return;
     }
+    
+    if (parseFloat(form.price) <= 0) {
+      setError('Price must be a valid amount greater than zero.');
+      return;
+    }
+
+    if (form.stock !== '' && parseInt(form.stock) < 0) {
+      setError('Stock cannot be a negative number.');
+      return;
+    }
 
     try {
       if (editingProductId) {

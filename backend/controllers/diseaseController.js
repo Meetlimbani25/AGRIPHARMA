@@ -4,10 +4,14 @@ const FormData = require('form-data');
 const path     = require('path');
 const fs       = require('fs');
 
-// =============================================
-// DETECT DISEASE - sends image to Python ML API
-// POST /api/disease/detect (protected)
-// =============================================
+/**
+ * Detects a plant disease from an uploaded image.
+ * Forwards the image to a Python ML API and saves the prediction result in the database.
+ * If the ML API is unreachable, it falls back to a demo response.
+ *
+ * @param {Object} req - Express request object containing the uploaded file in req.file
+ * @param {Object} res - Express response object
+ */
 const detectDisease = async (req, res) => {
   try {
     if (!req.file)
@@ -31,7 +35,6 @@ const detectDisease = async (req, res) => {
       result = mlResponse.data;
     } catch (mlErr) {
       // ML API not running - return demo response
-      console.log('ML API not reachable. Using demo response.');
       result = {
         success:     true,
         crop:        'Tomato',
@@ -98,10 +101,13 @@ const detectDisease = async (req, res) => {
   }
 };
 
-// =============================================
-// GET DISEASE HISTORY
-// GET /api/disease/history (protected)
-// =============================================
+/**
+ * Retrieves the scanning history for the currently logged-in farmer.
+ * Includes pagination support via query parameters.
+ *
+ * @param {Object} req - Express request object (req.query.page, req.query.limit)
+ * @param {Object} res - Express response object
+ */
 const getHistory = async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
@@ -128,7 +134,12 @@ const getHistory = async (req, res) => {
   }
 };
 
-// GET single scan result
+/**
+ * Retrieves a specific scan result by its ID for the logged-in farmer.
+ *
+ * @param {Object} req - Express request object containing scan ID in params
+ * @param {Object} res - Express response object
+ */
 const getScanById = async (req, res) => {
   try {
     const [rows] = await db.query(

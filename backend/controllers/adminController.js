@@ -1,5 +1,12 @@
 const db = require('../config/db');
 
+/**
+ * Retrieves a list of all shopkeepers for the admin dashboard.
+ * Orders them by newest registrations first.
+ *
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 const getShopkeepers = async (req, res) => {
   try {
     const [rows] = await db.query(
@@ -11,18 +18,25 @@ const getShopkeepers = async (req, res) => {
   }
 };
 
+/**
+ * Updates the approval status of a shopkeeper.
+ * Allows an admin to approve or reject a shopkeeper's registration.
+ *
+ * @param {Object} req - Express request object containing shopkeeper id in params and approval status in body
+ * @param {Object} res - Express response object
+ */
 const setShopkeeperApproval = async (req, res) => {
   try {
     const { id } = req.params;
     const { approve } = req.body;
-    console.log('admin approval request', { id, approve, body: req.body, user: req.admin });
+    
     const is_approved = approve ? 1 : 0;
     const [result] = await db.query('UPDATE shopkeepers SET is_approved = ? WHERE id = ?', [is_approved, id]);
+    
     if (result.affectedRows === 0) {
-      console.log('shopkeeper not found', id);
       return res.status(404).json({ success: false, message: 'Shopkeeper not found.' });
     }
-    console.log('shopkeeper approval updated', { id, is_approved });
+    
     res.json({ success: true, message: `Shopkeeper ${approve ? 'approved' : 'rejected'} successfully.` });
   } catch (err) {
     console.error('admin approval error', err);

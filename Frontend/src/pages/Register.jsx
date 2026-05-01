@@ -29,9 +29,18 @@ export default function Register() {
   const setF = (k, v) => setFarmerForm(f => ({ ...f, [k]: v }));
   const setS = (k, v) => setShopForm(f => ({ ...f, [k]: v }));
 
+  const validateMobile = (mobile) => /^\d{10}$/.test(mobile);
+  const validateEmail = (email) => !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePassword = (password) => password.length >= 6;
+
   const handleFarmerSubmit = async (e) => {
     e.preventDefault(); setError('');
+    
+    if (!validateMobile(farmerForm.mobile)) return setError('Please enter a valid 10-digit mobile number.');
+    if (!validateEmail(farmerForm.email)) return setError('Please enter a valid email address.');
+    if (!validatePassword(farmerForm.password)) return setError('Password must be at least 6 characters long.');
     if (farmerForm.password !== farmerForm.confirm_password) return setError('Passwords do not match.');
+    
     setLoading(true);
     try {
       const { confirm_password, ...data } = farmerForm;
@@ -45,7 +54,12 @@ export default function Register() {
 
   const handleShopSubmit = async (e) => {
     e.preventDefault(); setError('');
+
+    if (!validateMobile(shopForm.mobile)) return setError('Please enter a valid 10-digit mobile number.');
+    if (!validateEmail(shopForm.email)) return setError('Please enter a valid email address.');
+    if (!validatePassword(shopForm.password)) return setError('Password must be at least 6 characters long.');
     if (shopForm.password !== shopForm.confirm_password) return setError('Passwords do not match.');
+    
     setLoading(true);
     try {
       const { confirm_password, ...data } = shopForm;

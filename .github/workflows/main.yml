@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+      - prod
+      - dev
+      - test
+  pull_request:
+    branches:
+      - main
+      - prod
+      - dev
+      - test
+
+jobs:
+  test-backend:
+    name: Run Backend Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Backend Dependencies
+        working-directory: ./backend
+        run: npm install
+
+      - name: Run Jest Tests
+        working-directory: ./backend
+        run: npm test
+
+  build-frontend:
+    name: Build Frontend UI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Frontend Dependencies
+        working-directory: ./Frontend
+        run: npm install --legacy-peer-deps
+
+      - name: Build React Application
+        working-directory: ./Frontend
+        run: npm run build

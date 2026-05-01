@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginFarmer, loginShopkeeper, requestPasswordResetOtp, resetPasswordWithOtp, adminLogin } from '../services/api';
+import { loginFarmer, loginShopkeeper, requestPasswordResetOtp, resetPasswordWithOtp, adminLogin, googleLogin as apiGoogleLogin } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import './Auth.css';
 
 export default function Login() {
@@ -26,9 +27,17 @@ export default function Login() {
     }
   }, [user, role, navigate]);
 
+  const validateMobile = (mobile) => /^\d{10}$/.test(mobile);
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePassword = (password) => password.length >= 6;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); setSuccess(''); setLoading(true);
+    setError(''); setSuccess(''); 
+
+    if (!validateMobile(form.mobile)) return setError('Please enter a valid 10-digit mobile number.');
+    
+    setLoading(true);
 
     try {
       // 1. Attempt admin login first
@@ -59,9 +68,28 @@ export default function Login() {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true);
+    setError('');
+    try {
+      const res = await apiGoogleLogin({ credential: credentialResponse.credential, role: tab });
+      const userType = tab;
+      loginUser(res.data.token, res.data[userType], userType);
+      navigate(userType === 'farmer' ? '/dashboard' : '/shopkeeper');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Google Login failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleForgotRequest = async (e) => {
     e.preventDefault();
-    setError(''); setSuccess(''); setLoading(true);
+    setError(''); setSuccess(''); 
+
+    if (!validateEmail(forgotForm.email)) return setError('Please enter a valid email address.');
+    
+    setLoading(true);
     try {
       await requestPasswordResetOtp({ email: forgotForm.email, role: tab });
       setSuccess('OTP successfully sent to your email address!');
@@ -75,7 +103,11 @@ export default function Login() {
 
   const handleForgotVerify = async (e) => {
     e.preventDefault();
-    setError(''); setSuccess(''); setLoading(true);
+    setError(''); setSuccess(''); 
+
+    if (!validatePassword(forgotForm.newPassword)) return setError('New password must be at least 6 characters long.');
+    
+    setLoading(true);
     try {
       const res = await resetPasswordWithOtp({ 
         email: forgotForm.email, 
@@ -160,6 +192,24 @@ export default function Login() {
               <button type="submit" className="btn btn-primary" style={{width:'100%', justifyContent:'center'}} disabled={loading}>
                 {loading ? '...' : `Login as ${tab === 'farmer' ? 'Farmer' : 'Shopkeeper'} →`}
               </button>
+              
+              <div style={{ margin: '20px 0', textAlign: 'center', position: 'relative' }}>
+                <hr style={{ border: 'none', borderTop: '1px solid #ddd' }} />
+                <span style={{ position: 'absolute', top: '-10px', background: '#fff', padding: '0 10px', left: '50%', transform: 'translateX(-50%)', color: '#666', fontSize: '14px' }}>OR</span>
+              </div>
+              
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || "dummy-client-id"}>
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={() => setError('Google Authentication Failed.')}
+                    shape="rectangular"
+                    size="large"
+                    text="continue_with"
+                    theme="outline"
+                  />
+                </GoogleOAuthProvider>
+              </div>
             </form>
           ) : (
             resetStep === 1 ? (
