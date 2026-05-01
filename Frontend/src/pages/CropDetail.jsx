@@ -111,44 +111,7 @@ export default function CropDetail() {
           </section>
         )}
 
-        {/* Seeds */}
-        {seeds.length > 0 && (
-          <section className="seeds-section">
-            <h2 className="section-title" style={{ marginBottom: 24 }}>{t('cropDetail.availableSeeds')}</h2>
-            {cartMsg && <div className="alert alert-success" style={{ marginBottom: 16 }}>{cartMsg}</div>}
-            <div className="seeds-grid">
-              {seeds.map(seed => (
-                <div key={seed.id} className="seed-card">
-                  <div className="seed-header">
-                    <h4>{seed.variety_name}</h4>
-                    {seed.company && <span className="seed-company">{seed.company}</span>}
-                  </div>
-                  <div className="seed-info">
-                    {seed.days_to_harvest && <span>⏱ {seed.days_to_harvest} days</span>}
-                    {seed.yield_per_acre  && <span>📦 {seed.yield_per_acre}/acre</span>}
-                  </div>
-                  {seed.description && <p className="seed-desc">{seed.description}</p>}
-                  {seed.price ? (
-                    <div className="seed-purchase">
-                      <div className="seed-price">₹{seed.price} <small>/ {seed.quantity_value}{seed.quantity_unit}</small></div>
-                      {user ? (
-                        seed.stock > 0 ? (
-                          <button className="btn btn-primary btn-sm" onClick={() => handleAddSeed(seed)}>Add to Cart</button>
-                        ) : (
-                          <span className="badge badge-red">Out of Stock</span>
-                        )
-                      ) : (
-                        <Link to="/login" className="btn btn-outline btn-sm">Login to Buy</Link>
-                      )}
-                    </div>
-                  ) : (
-                    <span className="badge badge-gold">Price on Request</span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Seeds section removed as per request */}
       </div>
     </div>
   );
