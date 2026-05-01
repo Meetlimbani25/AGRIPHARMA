@@ -1,20 +1,12 @@
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // You can change this to your preferred service
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
+const axios = require('axios');
 
 const sendOTPEmail = async (email, otp) => {
   try {
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
+    const data = {
+      sender: { name: "AgriPharma", email: "meetlimbani25@gmail.com" },
+      to: [{ email: email }],
       subject: 'Password Reset OTP - AgriPharma',
-      html: `
+      htmlContent: `
         <div style="font-family: Arial, sans-serif; padding: 20px; text-align: center;">
           <h2 style="color: #2E7D32;">Password Reset Request</h2>
           <p>You requested to reset your password. Use the OTP below to proceed.</p>
@@ -27,11 +19,17 @@ const sendOTPEmail = async (email, otp) => {
       `
     };
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ OTP email sent to ${email} | Message ID: ${info.messageId}`);
+    const response = await axios.post('https://api.brevo.com/v3/smtp/email', data, {
+      headers: {
+        'api-key': process.env.BREVO_API_KEY,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log(`✅ OTP email sent to ${email} via Brevo API`);
     return { success: true };
   } catch (err) {
-    console.error('❌ Email Sending Error:', err.message);
+    console.error('❌ Email Sending Error:', err.response ? err.response.data : err.message);
     return { success: false, error: err.message };
   }
 };
