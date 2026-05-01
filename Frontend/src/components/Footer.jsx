@@ -38,7 +38,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2024 AgriPharma. Built with ❤️ for Indian farmers.</p>
+          <p>© {new Date().getFullYear()} AgriPharma. Built with ❤️ for Indian farmers.</p>
         </div>
       </div>
     </footer>
