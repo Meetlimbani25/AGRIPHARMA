@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginFarmer, loginShopkeeper, requestPasswordResetOtp, resetPasswordWithOtp, adminLogin, googleLogin as apiGoogleLogin } from '../services/api';
+import { loginFarmer, loginShopkeeper, requestPasswordResetOtp, resetPasswordWithOtp, adminLogin } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import './Auth.css';
 
 export default function Login() {
@@ -68,20 +67,7 @@ export default function Login() {
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    setLoading(true);
-    setError('');
-    try {
-      const res = await apiGoogleLogin({ credential: credentialResponse.credential, role: tab });
-      const userType = tab;
-      loginUser(res.data.token, res.data[userType], userType);
-      navigate(userType === 'farmer' ? '/dashboard' : '/shopkeeper');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Google Login failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const handleForgotRequest = async (e) => {
     e.preventDefault();
@@ -193,23 +179,7 @@ export default function Login() {
                 {loading ? '...' : `Login as ${tab === 'farmer' ? 'Farmer' : 'Shopkeeper'} →`}
               </button>
               
-              <div style={{ margin: '20px 0', textAlign: 'center', position: 'relative' }}>
-                <hr style={{ border: 'none', borderTop: '1px solid #ddd' }} />
-                <span style={{ position: 'absolute', top: '-10px', background: '#fff', padding: '0 10px', left: '50%', transform: 'translateX(-50%)', color: '#666', fontSize: '14px' }}>OR</span>
-              </div>
-              
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || "dummy-client-id"}>
-                  <GoogleLogin
-                    onSuccess={handleGoogleSuccess}
-                    onError={() => setError('Google Authentication Failed.')}
-                    shape="rectangular"
-                    size="large"
-                    text="continue_with"
-                    theme="outline"
-                  />
-                </GoogleOAuthProvider>
-              </div>
+
             </form>
           ) : (
             resetStep === 1 ? (

@@ -1,11 +1,10 @@
 const db      = require('../config/db');
 const bcrypt  = require('bcryptjs');
 const jwt     = require('jsonwebtoken');
-const { OAuth2Client } = require('google-auth-library');
 const FarmerModel = require('../models/FarmerModel');
 const ShopkeeperModel = require('../models/ShopkeeperModel');
 
-const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID || 'dummy-client-id');
+
 
 /**
  * Registers a new farmer in the system.
@@ -280,74 +279,6 @@ const forgotPasswordVerifyAndReset = async (req, res) => {
   }
 };
 
-/**
- * Handles Google Single Sign-On (SSO).
- * Verifies the Google JWT and logs the user in. Auto-registers if they don't exist.
- *
- * @param {Object} req - Express request object containing Google credential and role
- * @param {Object} res - Express response object
- */
-const googleLogin = async (req, res) => {
-  try {
-    const { credential, role } = req.body;
-    if (!credential || !role) return res.status(400).json({ success: false, message: 'Google token and role are required.' });
 
-    // Verify Google Token (In production, use proper CLIENT_ID)
-    const ticket = await googleClient.verifyIdToken({
-      idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID || 'dummy-client-id', 
-    }).catch(e => {
-      // If we are using a dummy client ID for the project, we can fallback to decoding manually for demo purposes
-      const decoded = jwt.decode(credential);
-      if (!decoded) throw new Error('Invalid Google Token');
-      return { getPayload: () => decoded };
-    });
 
-    const payload = ticket.getPayload();
-    const { email, name, picture } = payload;
-
-    if (!email) return res.status(400).json({ success: false, message: 'Google account must have an email.' });
-
-    if (role === 'farmer') {
-      let farmer = await FarmerModel.findByEmailFull(email);
-      if (!farmer) {
-        // Auto-register Farmer
-        const dummyMobile = 'G' + Date.now().toString().slice(-9); // Ensure unique 10 char
-        const insertId = await FarmerModel.create({
-          name: name || 'Google User',
-          mobile: dummyMobile,
-          email: email,
-          password: await bcrypt.hash(Math.random().toString(36), 10)
-        });
-        farmer = { id: insertId, name, mobile: dummyMobile, email };
-      }
-      const token = jwt.sign({ id: farmer.id, mobile: farmer.mobile, role: 'farmer' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-      return res.json({ success: true, message: 'Google Login successful!', token, farmer });
-      
-    } else if (role === 'shopkeeper') {
-      let shopkeeper = await ShopkeeperModel.findByEmailFull(email);
-      if (!shopkeeper) {
-        // Auto-register Shopkeeper
-        const dummyMobile = 'G' + Date.now().toString().slice(-9);
-        const insertId = await ShopkeeperModel.create({
-          name: name || 'Google User',
-          shop_name: name ? `${name}'s Shop` : 'Google Shop',
-          mobile: dummyMobile,
-          email: email,
-          password: await bcrypt.hash(Math.random().toString(36), 10),
-          is_approved: 1,
-          profile_picture: picture
-        });
-        shopkeeper = { id: insertId, name, shop_name: name ? `${name}'s Shop` : 'Google Shop', mobile: dummyMobile, email };
-      }
-      const token = jwt.sign({ id: shopkeeper.id, mobile: shopkeeper.mobile, role: 'shopkeeper' }, process.env.JWT_SECRET, { expiresIn: '7d' });
-      return res.json({ success: true, message: 'Google Login successful!', token, shopkeeper });
-    }
-
-    res.status(400).json({ success: false, message: 'Invalid role.' });
-  } catch (err) {
-    res.status(500).json({ success: false, message: 'Google SSO failed: ' + err.message });
-  }
-};
-
-module.exports = { register, login, getProfile, updateProfile, shopkeeperRegister, shopkeeperLogin, adminLogin, forgotPasswordSendOtp, forgotPasswordVerifyAndReset, googleLogin };
+module.exports = { register, login, getProfile, updateProfile, shopkeeperRegister, shopkeeperLogin, adminLogin, forgotPasswordSendOtp, forgotPasswordVerifyAndReset };

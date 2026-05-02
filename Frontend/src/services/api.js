@@ -21,7 +21,7 @@ export const registerShopkeeper = (data) => API.post('/auth/shopkeeper/register'
 export const loginShopkeeper = (data) => API.post('/auth/shopkeeper/login', data);
 export const requestPasswordResetOtp = (data) => API.post('/auth/forgot-password/send-otp', data);
 export const resetPasswordWithOtp = (data) => API.post('/auth/forgot-password/verify-reset', data);
-export const googleLogin = (data) => API.post('/auth/google', data);
+
 
 // Crops
 export const getCrops = (season) => API.get('/crops', season ? { params: { season } } : {});
