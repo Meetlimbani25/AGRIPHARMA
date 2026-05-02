@@ -3,6 +3,12 @@ const axios    = require('axios');
 const FormData = require('form-data');
 const path     = require('path');
 const fs       = require('fs');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+
+// Initialize Gemini
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
 
 /**
  * Detects a plant disease from an uploaded image.
@@ -22,42 +28,68 @@ const detectDisease = async (req, res) => {
 
     let result;
 
-    // Send image to Python Flask ML API
-    try {
-      const formData = new FormData();
-      formData.append('image', fs.createReadStream(imagePath));
+    // Primary Detection Method: Gemini AI
+    if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
+      try {
+        const imageData = fs.readFileSync(imagePath);
+        const base64Image = imageData.toString('base64');
 
-      const mlResponse = await axios.post(
-        `${process.env.ML_API_URL || 'http://localhost:8000'}/predict`,
-        formData,
-        { headers: formData.getHeaders(), timeout: 30000 }
-      );
-      result = mlResponse.data;
-    } catch (mlErr) {
-      // ML API not running - return demo response
-      result = {
-        success:     true,
-        crop:        'Tomato',
-        disease:     'Early Blight',
-        severity:    'Medium',
-        confidence:  94.5,
-        is_healthy:  false,
-        description: 'Dark brown spots with concentric rings on older leaves.',
-        medicine:    'Apply Mancozeb 75WP every 7-10 days.',
-        prevention:  'Remove lower infected leaves, water at base only.',
-        organic:     'Neem oil spray 2% twice a week.',
-        suggestions: ['Remove lower leaves touching soil', 'Apply mulch', 'Start spraying preventively'],
-        top3:        [
-          { disease: 'Tomato Early Blight', confidence: 94.5 },
-          { disease: 'Tomato Target Spot',  confidence: 3.2  },
-          { disease: 'Tomato Healthy',      confidence: 2.3  }
-        ],
-        mode: 'demo'
-      };
+        const prompt = `
+          Analyze this plant image and provide a disease diagnosis in JSON format.
+          The response MUST be a valid JSON object with the following structure:
+          {
+            "success": true,
+            "crop_name": "Crop Name",
+            "disease_name": "Disease Name or 'Healthy'",
+            "severity": "Low/Medium/High",
+            "confidence": 0.0 to 1.0,
+            "is_healthy": true/false,
+            "description": "Short description of the disease",
+            "treatment": "Recommended medicine/chemical control",
+            "prevention": "Preventive measures",
+            "organic": "Organic control methods",
+            "medicines": ["Medicine 1", "Medicine 2"],
+            "top3": [
+              {"disease": "Disease 1", "confidence": score},
+              {"disease": "Disease 2", "confidence": score},
+              {"disease": "Disease 3", "confidence": score}
+            ]
+          }
+          If the plant is healthy, set is_healthy to true and describe it accordingly.
+          Return ONLY the raw JSON string.
+        `;
+
+        const visionResult = await model.generateContent([
+          prompt,
+          {
+            inlineData: {
+              data: base64Image,
+              mimeType: req.file.mimetype
+            }
+          }
+        ]);
+
+        const responseText = visionResult.response.text();
+        const jsonString = responseText.replace(/```json|```/g, '').trim();
+        result = JSON.parse(jsonString);
+        
+        // Ensure result has expected fields for DB and fallback
+        result.disease = result.disease_name;
+        result.medicine = result.treatment;
+        result.crop = result.crop_name;
+        result.suggestions = result.medicines;
+      } catch (geminiErr) {
+        console.error("Gemini Error:", geminiErr);
+        result = await fallbackToFlaskOrDemo(imagePath);
+      }
+    } else {
+      result = await fallbackToFlaskOrDemo(imagePath);
     }
 
     // Save scan result to disease_history table
-    const suggestionsText = Array.isArray(result.suggestions) ? result.suggestions.join(' | ') : result.suggestions;
+    const suggestionsText = Array.isArray(result.suggestions || result.medicines) 
+      ? (result.suggestions || result.medicines).join(' | ') 
+      : (result.suggestions || result.medicines);
 
     await db.query(
       `INSERT INTO disease_history
@@ -66,12 +98,12 @@ const detectDisease = async (req, res) => {
       [
         farmerId,
         imagePath,
-        result.disease,
+        result.disease_name || result.disease,
         result.confidence,
-        result.crop,
+        result.crop_name || result.crop,
         result.severity,
         result.description,
-        result.medicine,
+        result.treatment || result.medicine,
         result.prevention,
         result.organic,
         suggestionsText
@@ -80,8 +112,7 @@ const detectDisease = async (req, res) => {
 
     // Get matching products from database
     let suggestedProducts = [];
-    if (!result.is_healthy && result.medicine) {
-      const keyword = result.medicine.split(' ')[1] || result.disease.split(' ')[0];
+    if (!result.is_healthy && (result.treatment || result.medicine)) {
       const [products] = await db.query(
         `SELECT id, name, price, price_unit, unit, image_url
          FROM products WHERE category = 'medicine' LIMIT 3`
@@ -89,12 +120,14 @@ const detectDisease = async (req, res) => {
       suggestedProducts = products;
     }
 
+    // Flatten response for frontend
     res.json({
       success:            true,
-      result,
+      ...result,
       image_saved:        imagePath,
       suggested_products: suggestedProducts
     });
+
 
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -154,4 +187,43 @@ const getScanById = async (req, res) => {
   }
 };
 
+/**
+ * Helper function for fallback detection
+ */
+async function fallbackToFlaskOrDemo(imagePath) {
+  try {
+    const formData = new FormData();
+    formData.append('image', fs.createReadStream(imagePath));
+
+    const mlResponse = await axios.post(
+      `${process.env.ML_API_URL || 'http://localhost:8000'}/predict`,
+      formData,
+      { headers: formData.getHeaders(), timeout: 30000 }
+    );
+    return mlResponse.data;
+  } catch (mlErr) {
+    return {
+      success:      true,
+      crop_name:    'Tomato',
+      disease_name: 'Early Blight',
+      severity:     'Medium',
+      confidence:   0.945,
+      is_healthy:   false,
+      description:  'Dark brown spots with concentric rings on older leaves.',
+      treatment:    'Apply Mancozeb 75WP every 7-10 days.',
+      prevention:   'Remove lower infected leaves, water at base only.',
+      organic:      'Neem oil spray 2% twice a week.',
+      medicines:    ['Mancozeb 75WP', 'Neem Oil'],
+      top3:         [
+        { disease: 'Tomato Early Blight', confidence: 0.945 },
+        { disease: 'Tomato Target Spot',  confidence: 0.032  },
+        { disease: 'Tomato Healthy',      confidence: 0.023  }
+      ],
+      mode: 'demo'
+    };
+
+  }
+}
+
 module.exports = { detectDisease, getHistory, getScanById };
+
